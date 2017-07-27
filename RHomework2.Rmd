@@ -1,0 +1,41 @@
+---
+title: "R Class, Homework #2"
+author: "Jared Raskin"
+date: "July 25, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### R Markdown
+
+```{r}
+#Created a function to calculate factorial
+factorial_hw <- function(n){
+  if (n == 0)    return (1)
+  else           return (n * factorial_hw(n - 1))
+}
+
+#Created a function to calculate "n choose r" given factorial function above
+choose_function <- function(n,r) {
+  return (factorial_hw(n) / ((factorial_hw(n - r))*factorial_hw(r)))
+}
+
+#Testing my function vs. the built-in function
+choose_function(5, 3)
+choose(5, 3)
+choose_function(2, 1)
+choose(2, 1)
+choose_function(4, 0)
+choose(4, 0)
+choose_function(7, 4)
+choose(7, 4)
+choose_function(9, 5)
+choose(9, 5)
+
+#My function matched the built-in function on the 5 tests above
+
+```
+
