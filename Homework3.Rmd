@@ -1,0 +1,46 @@
+---
+title: "RHW3"
+author: "Jared"
+date: "August 2, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+URL = "https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data"
+mush_table = read.csv(URL, sep = ",")
+DF = data.frame(mush_table[1:5])
+colnames(DF) = c("Class","CapShape","CapSurface","CapColor","Bruises")
+
+DF[,c(1:5)] = sapply(DF[,c(1:5)],as.character)
+DF$Class[DF$Class == 'e'] = "Edible"
+DF$Class[DF$Class == 'p'] = "Poison"
+DF$CapShape[DF$CapShape == 'b'] = "Bell"
+DF$CapShape[DF$CapShape == 'c'] = "Conical"
+DF$CapShape[DF$CapShape == 'x'] = "Convex"
+DF$CapShape[DF$CapShape == 'f'] = "Flat"
+DF$CapShape[DF$CapShape == 'k'] = "Knobbed"
+DF$CapShape[DF$CapShape == 's'] = "Sunken"
+DF$CapSurface[DF$CapSurface == 'f'] = "Fibrous"
+DF$CapSurface[DF$CapSurface == 'g'] = "Grooves"
+DF$CapSurface[DF$CapSurface == 'y'] = "Scaly"
+DF$CapSurface[DF$CapSurface == 's'] = "Smooth"
+DF$CapColor[DF$CapColor == 'n'] = "Brown"
+DF$CapColor[DF$CapColor == 'b'] = "Buff"
+DF$CapColor[DF$CapColor == 'c'] = "Cinnamon"
+DF$CapColor[DF$CapColor == 'g'] = "Gray"
+DF$CapColor[DF$CapColor == 'r'] = "Green"
+DF$CapColor[DF$CapColor == 'p'] = "Pink"
+DF$CapColor[DF$CapColor == 'u'] = "Purple"
+DF$CapColor[DF$CapColor == 'e'] = "Red"
+DF$CapColor[DF$CapColor == 'w'] = "White"
+DF$CapColor[DF$CapColor == 'y'] = "Yellow"
+DF$Bruises[DF$Bruises == 't'] = "Bruises"
+DF$Bruises[DF$Bruises == 'f'] = "No"
+DF
+```
