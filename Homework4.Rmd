@@ -1,0 +1,79 @@
+---
+title: "Homework4"
+author: "Jared"
+date: "August 10, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Homework 4 - Histograms, Boxplots, and Scatterplots
+###With and Without ggplot2
+
+```{r}
+#Loading CSV
+#This dataset was selected from the list of R datasets suggested in the assignment 
+URL = "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/Stat2Data/MLB2007Standings.csv"
+mlb2007standings_table = read.csv(URL, header = TRUE, sep = ",")
+
+#Checking that it worked and showing the data starting point
+mlb2007standings_table
+str(mlb2007standings_table)
+summary(mlb2007standings_table)
+#Nothing stands out as looking incorrect
+```
+
+## Basic Histogram of Wins
+```{r}
+hist(mlb2007standings_table$Wins,main="MLB 2007 Wins Histogram", xlab="Team Wins",col="gray",border="blue")
+#4 teams won more than 90 games and 4 teams won 70 or less games.
+#It is also interesting that 71-75 and 86-90 were the bins with the highest frequency.
+#Given that there are 162 games in a season, 
+#I would have expected the bin with the highest frequency to be closer to 81 wins.
+```
+
+##Basic Scatterplot of ERA and WHIP
+```{r}
+plot(ERA ~ WHIP, data=mlb2007standings_table)
+#Unsurprisingly, it looks like there is a direct relationship between ERA and WHIP.
+#As walks and hits increase, I would expect earned runs to increase as well.
+```
+
+##Basic Boxplot of WHIP
+```{r}
+boxplot(mlb2007standings_table$WHIP)
+#There is an outlier.  The Florida Marlins had a WHIP of 1.58 (0.17 above the median).
+#Sergio Mitre (1.48) had the lowest WHIP of their starting pitchers, and that is still very high.
+```
+
+##ggplot Histogram of Wins
+```{r}
+#Loading the library to create ggplot versions
+library(ggplot2)
+
+ggplot(data=mlb2007standings_table) + geom_histogram(aes(x=Wins))
+#The bin size is different than the basic histogram and it paints a different story.
+#3 teams won 88 games.  That is the only win amount with a frequency greater than 2.
+```
+
+##ggplot Scatterplot of Wins and Runs
+```{r}
+#Saving ggplot scatterplot in variable
+g <- ggplot(mlb2007standings_table, aes(x=Runs, y=Wins)) + geom_point()
+#Adding color to indicate league
+g + geom_point(aes(color=League))
+#Creating separate scatterplots by league
+g + geom_point(aes(color=League)) + facet_wrap(~League)
+#Unsurprisingly, there is a direct relationship between runs scored and wins.
+#As expected, it doesn't look as strong as the direct relationship between WHIP and ERA though since run prevention is not included.
+```
+
+##ggplot Boxplots of WHIP by League
+```{r}
+ggplot(mlb2007standings_table, aes(y=WHIP, x=League)) + geom_boxplot()
+#The National League had a lower median WHIP.  Their 75th percentile WHIP was very close to the AL median.
+#Besides the Marlins (metioned above), the NL teams were more concentrated in their WHIPs.  
+#The middle 50% box is smaller than the AL.
+```
